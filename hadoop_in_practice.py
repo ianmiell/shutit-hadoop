@@ -187,26 +187,6 @@ deleting container resources.</description>
 		shutit.send('hadoop-daemon.sh start namenode')
 		shutit.send('hadoop-daemon.sh start datanode')
 		shutit.send('mr-jobhistory-daemon.sh start historyserver')
-		shutit.pause_point('''After running the start script, use the jps Java utility to check that all the processes are running. You should see the output that follows, although the ordering and process ID s will differ:
-$ jps
-32542
-1085
-32131
-32613
-32358
-1030
-NameNode
-Jps
-ResourceManager
-DataNode
-NodeManager
-JobHistoryServer
-If any of these processes aren't running, check the logs directory (/usr/local/
-hadoop/logs) to see why the processes didn't start correctly. Each of the preceding
-processes has two output files that can be identified by name and should be checked
-for errors. The most common error is that the HDFS formatting step, which I showed
-earlier, was skipped.''')
-
 #Once Hadoop is up and running, the first thing you'll want to do is create a home
 #directory for your user. If you're running on Hadoop 1, the command is
 #$ hadoop fs -mkdir /user/<your-linux-username>
@@ -215,9 +195,9 @@ earlier, was skipped.''')
 #Verifying the installation
 
 		#The following commands can be used to test your Hadoop installation. The first two commands create a directory in HDFS and create a file in HDFS :
-		shutit.send('hadoop fs -mkdir /tmp')
-		shutit.send('echo "the cat sat on the mat" | hadoop fs -put - /tmp/input.txt')
-		shutit.send('hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/*-examples*.jar wordcount /tmp/input.txt /tmp/output')
+		shutit.send('hadoop fs -mkdir /tmphdfs')
+		shutit.send('echo "the cat sat on the mat" | hadoop fs -put - /tmphdfs/input.txt')
+		shutit.send('hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/*-examples*.jar wordcount /tmphdfs/input.txt /tmphdfs/output')
 #Examine and verify the MapReduce job outputs on HDFS (the outputs will differ based on the contents of the config files that you used for the job inputs):
 #$ hadoop fs -cat /tmp/output/part*
 #at
@@ -240,7 +220,17 @@ earlier, was skipped.''')
 #yarn-daemon.sh stop nodemanager
 #yarn-daemon.sh stop resourcemanager
 		shutit.send('git clone https://github.com/alexholmes/hiped2')
-		shutit.send('cd releases')
+		shutit.send('wget -qO- https://github.com/alexholmes/hiped2/releases/download/v2.0.8/hip-2.0.0-package.tar.gz | tar -zxvf -')
+		shutit.send('cd hip-2.0.0')
+		shutit.send('export HIP_HOME=/usr/local/hip-2.0.0')
+		shutit.send('export PATH=${PATH}:${HIP_HOME}/bin')
+		shutit.send('hadoop fs -mkdir -p hip/input')
+		shutit.send('echo "cat sat mat" | hadoop fs -put - hip/input/1.txt')
+		shutit.send('echo "dog lay mat" | hadoop fs -put - hip/input/2.txt')
+		# run the inverted index example
+		shutit.send('hip hip.ch1.InvertedIndexJob --input hip/input --output hip/output')
+		# examine the results in HDFS
+		shutit.send('hadoop fs -cat hip/output/part*')
 		shutit.logout()
 		return True
 
