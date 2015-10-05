@@ -1,0 +1,1 @@
+hadoop_in_practice: description of module directory in here
