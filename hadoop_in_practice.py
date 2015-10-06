@@ -231,7 +231,6 @@ deleting container resources.</description>
 		shutit.send('hip hip.ch1.InvertedIndexJob --input hip/input --output hip/output')
 		# examine the results in HDFS
 		shutit.send('hadoop fs -cat hip/output/part*')
-		shutit.logout()
 		return True
 
 	def get_config(self, shutit):
