@@ -1,1 +1,6 @@
-hadoop_in_practice: description of module directory in here
+```
+pip install shutit
+git clone --recursive https://github.com/ianmiell/shutit-hadoop.git
+cd shutit-hadoop/bin
+./build.sh
+```
