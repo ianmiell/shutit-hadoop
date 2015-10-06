@@ -195,6 +195,7 @@ deleting container resources.</description>
 #Verifying the installation
 
 		#The following commands can be used to test your Hadoop installation. The first two commands create a directory in HDFS and create a file in HDFS :
+		shutit.send('hadoop fs -mkdir /user')
 		shutit.send('hadoop fs -mkdir /user/root')
 		shutit.send('echo "the cat sat on the mat" | hadoop fs -put - /user/root/input.txt')
 		shutit.send('hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/*-examples*.jar wordcount /user/root/input.txt /user/root/output')
