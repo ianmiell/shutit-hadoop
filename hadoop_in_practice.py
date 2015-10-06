@@ -195,9 +195,9 @@ deleting container resources.</description>
 #Verifying the installation
 
 		#The following commands can be used to test your Hadoop installation. The first two commands create a directory in HDFS and create a file in HDFS :
-		shutit.send('hadoop fs -mkdir /tmphdfs')
-		shutit.send('echo "the cat sat on the mat" | hadoop fs -put - /tmphdfs/input.txt')
-		shutit.send('hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/*-examples*.jar wordcount /tmphdfs/input.txt /tmphdfs/output')
+		shutit.send('hadoop fs -mkdir /user/root')
+		shutit.send('echo "the cat sat on the mat" | hadoop fs -put - /user/root/input.txt')
+		shutit.send('hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/*-examples*.jar wordcount /user/root/input.txt /user/root/output')
 #Examine and verify the MapReduce job outputs on HDFS (the outputs will differ based on the contents of the config files that you used for the job inputs):
 #$ hadoop fs -cat /tmp/output/part*
 #at
@@ -210,15 +210,6 @@ deleting container resources.</description>
 #1
 #the
 #2
-
-
-#Stopping Hadoop 2
-#To stop Hadoop 2, use the following commands:
-#mr-jobhistory-daemon.sh stop historyserver
-#hadoop-daemon.sh stop datanode
-#hadoop-daemon.sh stop namenode
-#yarn-daemon.sh stop nodemanager
-#yarn-daemon.sh stop resourcemanager
 		shutit.send('git clone https://github.com/alexholmes/hiped2')
 		shutit.send('wget -qO- https://github.com/alexholmes/hiped2/releases/download/v2.0.8/hip-2.0.0-package.tar.gz | tar -zxvf -')
 		shutit.send('cd hip-2.0.0')
@@ -231,6 +222,7 @@ deleting container resources.</description>
 		shutit.send('hip hip.ch1.InvertedIndexJob --input hip/input --output hip/output')
 		# examine the results in HDFS
 		shutit.send('hadoop fs -cat hip/output/part*')
+		shutit.pause_point('Have a shell - appendix done, back to page 21.')
 		return True
 
 	def get_config(self, shutit):
@@ -253,6 +245,16 @@ deleting container resources.</description>
 	
 	def is_installed(self, shutit):
 		return False
+
+	def stop(self, shutit):
+#Stopping Hadoop 2
+#To stop Hadoop 2, use the following commands:
+#mr-jobhistory-daemon.sh stop historyserver
+#hadoop-daemon.sh stop datanode
+#hadoop-daemon.sh stop namenode
+#yarn-daemon.sh stop nodemanager
+#yarn-daemon.sh stop resourcemanager
+		return True
 
 
 def module():
