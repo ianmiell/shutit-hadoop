@@ -233,6 +233,8 @@ deleting container resources.</description>
 		# ALternatives: ELK, Hunk, Splunk
 		# YARN can't do gang scheduling, long running processes, and you have to implement container mgmt and fault tolerance
 		# Up to 2.2, page 40
+		# Compatibility stuff between 1/2, how to run a small job faster
+		# Up to 2.3, page 52
 
 		return True
 
