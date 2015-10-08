@@ -224,6 +224,16 @@ deleting container resources.</description>
 		# examine the results in HDFS
 		shutit.send('hadoop fs -cat hip/output/part*')
 		shutit.pause_point('Have a shell - appendix done, back to page 27.')
+		shutit.send('yarn application -list',note='list application id etc, can do yarn logs -applicationId ID if log aggregation is enabled')
+		shutit.send('curl localhost:8088/cluster',note='hit the resource manager address')
+		# Change: yarn.log-aggregation-enable to enable logging, eg in /usr/local/hadoop-2.6.1/share/doc/hadoop/hadoop-yarn/hadoop-yarn-common/yarn-default.xml
+		#Accessing log files in HDFS
+		#By default, aggregated log files go into the following directory in HDFS :
+		#/tmp/logs/${user}/logs/application_<appid>
+		# ALternatives: ELK, Hunk, Splunk
+		# YARN can't do gang scheduling, long running processes, and you have to implement container mgmt and fault tolerance
+		# Up to 2.2, page 40
+
 		return True
 
 	def get_config(self, shutit):
