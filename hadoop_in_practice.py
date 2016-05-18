@@ -235,6 +235,13 @@ deleting container resources.</description>
 		# Up to 2.2, page 40
 		# Compatibility stuff between 1/2, how to run a small job faster
 		# Up to 2.3, page 52
+		# HBase closely integrated with Hadoop,NoSQL db
+		# YARN uses cgroups from Linux
+		# SQL: Hive (slow), Impala from Cloudera, helps multi-tenancy. Hortonworks have made HIve better.
+		# Graph processing:
+		# Real-time data: Apache storm, spark streaming
+		# In-mem: http://spark.apache.org/docs/0.9.0/running-on-yarn.html.
+		# Up to part 2: p59
 
 		return True
 
